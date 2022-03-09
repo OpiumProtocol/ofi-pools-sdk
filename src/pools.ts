@@ -3,7 +3,7 @@ import { EProductType, TProduct, TProductState } from '@opiumteam/ofi-sdk/lib/pr
 import { TAllStakingsResponse } from '@opiumteam/ofi-sdk/lib/staking'
 
 import { EBlockchainEnvironment } from '.'
-import { getPoolPhaseDetails } from './utils'
+import { getPoolPhaseDetails, renderAvgCost } from './utils'
 
 type ProductResponse = TProduct<EProductType> & { state: TProductState<EProductType> }
 type TAllProductsResponse = Array<ProductResponse>
@@ -49,6 +49,19 @@ export const loadStakings = async (env: EBlockchainEnvironment, userAddress: str
   STAKINGS_CACHE[env] = stakingsResponse.data
 }
 
+/**
+ * @return === null - if no related product or staking was found
+ * Product
+ * @return.product.params.inverseTrigger - Strike price
+ * Staking
+ * @return.staking.params.poolUtilization - Current pool utilization (units: from 0 to 1, represents 0% to 100%)
+ * @return.staking.params.yieldToDate - Return since inception (in %)
+ * @return.staking.params.yieldToDateAnnualized - Annualized return (APR) (in %)
+ * @return.staking.params.currentEpochTimestamp - Strike price reset timestamp
+ * @return.staking.params.poolSize - Total staked
+ * @return.staking.userStaked - Your stake (only if userAddress is passed, otherwise 0)
+ * @return.staking.userStakedPending - Your stake (scheduled | pending) (only if userAddress is passed, otherwise 0)
+ */
 export const loadPool = async (env: EBlockchainEnvironment, poolAddress: string, userAddress: string | null = null, refresh = false): Promise<TPoolData | null> => {
   const preparedRequests = []
 
@@ -71,11 +84,27 @@ export const loadPool = async (env: EBlockchainEnvironment, poolAddress: string,
   return product === null || staking === null ? null : { product, staking }
 }
 
+/**
+ * Phases
+ * @return.phases.phase - Current phase
+ * @return.phases.nextStakingPhaseTimestamp - Next rebalancing (roll) timestamp
+ * Returns
+ * @return.returns.benchmarkReturn - Benchmark return calculated
+ */
 export const getPoolDetails = (poolData: TPoolData) => {
-  return getPoolPhaseDetails(
-    poolData.product.state.epochLength,
-    poolData.product.state.stakingPhaseLength,
-    poolData.product.state.tradingPhaseLength,
-    poolData.product.state.currentEpochTimestamp
-  )
+  return {
+    phases: getPoolPhaseDetails(
+      poolData.product.state.epochLength,
+      poolData.product.state.stakingPhaseLength,
+      poolData.product.state.tradingPhaseLength,
+      poolData.product.state.currentEpochTimestamp
+    ),
+    returns: {
+      benchmarkReturn: renderAvgCost(
+        poolData.product.avgCost,
+        poolData.product.avgCostFrequency,
+        poolData.product.params.collateralization
+      )
+    }
+  }
 }

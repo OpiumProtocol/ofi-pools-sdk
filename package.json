@@ -1,6 +1,6 @@
 {
   "name": "@opiumteam/ofi-pools-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Opium Finance Pools SDK",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -19,7 +19,7 @@
     "/lib"
   ],
   "dependencies": {
-    "@opiumteam/ofi-sdk": "^1.1.3",
+    "@opiumteam/ofi-sdk": "^1.1.4",
     "axios": "^0.26.0"
   },
   "devDependencies": {

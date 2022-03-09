@@ -35,10 +35,10 @@
   dependencies:
     "@cspotcode/source-map-consumer" "0.8.0"
 
-"@opiumteam/ofi-sdk@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@opiumteam/ofi-sdk/-/ofi-sdk-1.1.3.tgz#5e799b999cf1c749b79d30ff5003055a8f341cf5"
-  integrity sha512-WpNdFX52X6X7gFA8pX+9wgEWrQt15oUGTK3H3j7NjWEZaRC/kD5XWRbHjDk2e2VHfTgNHAHUAl5APCHRW/tqXw==
+"@opiumteam/ofi-sdk@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@opiumteam/ofi-sdk/-/ofi-sdk-1.1.4.tgz#a69eb01e532f641314a7e00381c82779631a8a9f"
+  integrity sha512-ImGZm/QXIbjGxyIw7vQY8thVzuW5iYDP4Qdxw5cK30suaMEGg77naMNoAm1SQrwxRAnOYOXQbb9rl2Q4Czz9zg==
 
 "@tsconfig/node10@^1.0.7":
   version "1.0.8"

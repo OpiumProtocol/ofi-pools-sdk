@@ -1,3 +1,5 @@
+import { EProductAvgCostFrequency } from '@opiumteam/ofi-sdk/lib/product'
+
 export const enum EPhase {
   STAKING = 'STAKING',
   TRADING = 'TRADING',
@@ -49,5 +51,28 @@ export const getPoolPhaseDetails = (epochLength: number, stakingPhaseLength: num
     nextStakingPhaseTimestamp,
     nextIdlePhase,
     stakingPhaseStart
+  }
+}
+
+const calculateAvgCost = (avgCost: number, pow: number, collateralization: number): number => {
+  return ((1 + (avgCost / 100 / collateralization)) ** pow - 1) * 100
+}
+
+export const renderAvgCost = (avgCost: number, frequency: EProductAvgCostFrequency | null, collateralization: number): string => {
+  switch (frequency) {
+    case EProductAvgCostFrequency.ANNUAL:
+      return `APR: ${avgCost}%`
+    case EProductAvgCostFrequency.DAILY:
+      return `${avgCost}% daily  (APR}: ${(calculateAvgCost(avgCost, 365, collateralization)).toFixed(1)}%)`
+    case EProductAvgCostFrequency.MONTHLY:
+      return `${avgCost}% monthly (APR}: ${(calculateAvgCost(avgCost, 12, collateralization)).toFixed(1)}%)`
+    case EProductAvgCostFrequency.WEEKLY:
+      return `${avgCost}% weekly (APR}: ${(calculateAvgCost(avgCost, 52, collateralization)).toFixed(1)}%)`
+    case EProductAvgCostFrequency.PER_3_DAYS:
+      return `${avgCost}% per 3 days (APR}: ${(calculateAvgCost(avgCost, 120, collateralization)).toFixed(1)}%)`
+    case EProductAvgCostFrequency.SINGLE_EPOCH:
+      return `${avgCost}%`
+    default:
+      return ''
   }
 }
