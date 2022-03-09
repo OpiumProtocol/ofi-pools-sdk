@@ -1,14 +1,21 @@
-import { pools } from './db'
-import { loadProducts, loadStakings, loadPool, getPoolDetails } from './pools'
+import { pools, helpers } from './db'
+import { loadProducts, loadStakings, loadPool, getPoolDetails } from './api'
+import { OpiumStakingPool } from './contracts/OpiumStakingPool'
 
 export default {
   db: {
     pools,
+    helpers
   },
-  loadProducts,
-  loadStakings,
-  loadPool,
-  getPoolDetails
+  api: {
+    loadProducts,
+    loadStakings,
+    loadPool,
+    getPoolDetails
+  },
+  contracts: {
+    OpiumStakingPool    
+  }
 }
 
 export * from './types'

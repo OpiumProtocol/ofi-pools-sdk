@@ -1,5 +1,27 @@
 import { EBlockchainEnvironment, TLocalDBPool } from './types'
 
+export const helpers: Record<EBlockchainEnvironment, {
+  DepositScheduler: string
+  WithdrawalScheduler: string
+}> = {
+  [EBlockchainEnvironment.ETHEREUM]: {
+    DepositScheduler: '',
+    WithdrawalScheduler: ''
+  },
+  [EBlockchainEnvironment.MATIC]: {
+    DepositScheduler: '',
+    WithdrawalScheduler: ''
+  },
+  [EBlockchainEnvironment.ARBITRUM]: {
+    DepositScheduler: '',
+    WithdrawalScheduler: ''
+  },
+  [EBlockchainEnvironment.BINANCE]: {
+    DepositScheduler: '',
+    WithdrawalScheduler: ''
+  },
+}
+
 export const pools: Record<EBlockchainEnvironment, TLocalDBPool[]> = {
   [EBlockchainEnvironment.ETHEREUM]: [
     {
