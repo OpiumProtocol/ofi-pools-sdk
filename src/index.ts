@@ -1,6 +1,10 @@
 import { pools, helpers } from './db'
+
 import { loadProducts, loadStakings, loadPool, getPoolDetails } from './api'
+
 import { OpiumStakingPool } from './contracts/OpiumStakingPool'
+import { WithdrawalScheduler } from './contracts/WithdrawalScheduler'
+import { DepositScheduler } from './contracts/DepositScheduler'
 
 export default {
   db: {
@@ -14,7 +18,9 @@ export default {
     getPoolDetails
   },
   contracts: {
-    OpiumStakingPool    
+    OpiumStakingPool,
+    DepositScheduler,
+    WithdrawalScheduler
   }
 }
 
