@@ -53,14 +53,19 @@ export const loadStakings = async (env: EBlockchainEnvironment, userAddress: str
  * @return === null - if no related product or staking was found
  * Product
  * @return.product.params.inverseTrigger - Strike price
+ * @return.product.avgCostFrequency - Product frequency
  * Staking
  * @return.staking.params.poolUtilization - Current pool utilization (units: from 0 to 1, represents 0% to 100%)
  * @return.staking.params.yieldToDate - Return since inception (in %)
  * @return.staking.params.yieldToDateAnnualized - Annualized return (APR) (in %)
  * @return.staking.params.currentEpochTimestamp - Strike price reset timestamp
+ * @return.staking.params.stakingPhaseLength - Rebalancing phase duration
  * @return.staking.params.poolSize - Total staked
  * @return.staking.userStaked - Your stake (only if userAddress is passed, otherwise 0)
  * @return.staking.userStakedPending - Your stake (scheduled | pending) (only if userAddress is passed, otherwise 0)
+ * Computed
+ * {@return.staking.params.currentEpochTimestamp - @return.staking.params.epochLength} - Epoch start timestamp
+ * @return.staking.params.currentEpochTimestamp - Epoch end timestamp
  */
 export const loadPool = async (env: EBlockchainEnvironment, poolAddress: string, userAddress: string | null = null, refresh = false): Promise<TPoolData | null> => {
   const preparedRequests = []
