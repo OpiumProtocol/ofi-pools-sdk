@@ -30,6 +30,17 @@ describe('SDK', () => {
     console.log(SDK.api.getPoolDetails(pool))
   })
 
+  it('should load the pool performance & payout charts', async () => {
+    const performanceChart = await SDK.api.loadPoolPerformanceChart(EBlockchainEnvironment.ETHEREUM, poolAddress)
+    console.log(performanceChart)
+
+    const payoutChart = await SDK.api.loadPoolPayoutChart(EBlockchainEnvironment.ETHEREUM, poolAddress)
+    console.log(payoutChart)
+
+    const holdingVsStakingChart = await SDK.api.loadHoldingVsStakingChart(EBlockchainEnvironment.ETHEREUM, poolAddress)
+    console.log(holdingVsStakingChart)
+  })
+
   it('should correctly prepare tx calldata', async () => {
     providerConnector = new PrivateKeyProviderConnector(privateKey, web3)
 
@@ -59,7 +70,7 @@ describe('SDK', () => {
     
     const scheduleWithdrawal = withdrawalScheduler.scheduleWithdrawal(poolAddress)
     const unscheduleWithdrawal = withdrawalScheduler.unscheduleWithdrawal(poolAddress)
-    // const isScheduled = await withdrawalScheduler.isScheduled(poolAddress)
+    const isScheduled = await withdrawalScheduler.isScheduled(poolAddress)
 
     console.log({
       deposit,
@@ -70,7 +81,8 @@ describe('SDK', () => {
       scheduled,
 
       scheduleWithdrawal,
-      unscheduleWithdrawal
+      unscheduleWithdrawal,
+      isScheduled
     })
   })
 })

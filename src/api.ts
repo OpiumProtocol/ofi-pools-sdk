@@ -11,6 +11,25 @@ type TPoolData = {
   product: ProductResponse
   staking: TAllStakingsResponse[0]
 }
+type TAnalyticsChart = {
+  timestamp: number
+  performance: number
+  linePerformance: number
+}[]
+type TPayoutChart = {
+  price: number
+  buyerPayout: number
+  sellerPayout: number
+}[]
+type THoldingVsStakingChart = {
+  date: string
+  lpPrice: number
+  price: number
+  timestamp: number
+  tokenPrice: number
+}[]
+
+const OPIUM_WATCH_BASE_URL = 'https://api.opium.watch/v1'
 
 const CLIENTS = {
   [EBlockchainEnvironment.ETHEREUM]: axios.create({ baseURL: 'https://api.opium.finance/v1' }),
@@ -112,4 +131,66 @@ export const getPoolDetails = (poolData: TPoolData) => {
       )
     }
   }
+}
+
+/**
+ * Returns the performance chart of the pool
+ * @return[].timestamp - Epoch timestamp
+ * @return[].performance - Performance at the particular epoch (units: from 0 to 1, represents 0% to 100%)
+ * @return[].linePerformance - Performance since inception (units: from 0 to 1, represents 0% to 100%)
+ */
+export const loadPoolPerformanceChart = async (env: EBlockchainEnvironment, poolAddress: string): Promise<TAnalyticsChart> => {
+  const analyticsChartResponse = await CLIENTS[env].get<TAnalyticsChart>(`/products/${poolAddress.toLowerCase()}/analyticsChart`)
+  
+  return analyticsChartResponse.data
+}
+
+/**
+ * Returns the payout chart of the derivative
+ * @return[].price - Price of underlying asset
+ * @return[].buyerPayout - Payout of buyer (non-relevant for the pools) (units: from 0 to 1, represents 0% to 100%)
+ * @return[].sellerPayout - Payout of the pool (relevant for the pools) (units: from 0 to 1, represents 0% to 100%)
+ */
+export const loadPoolPayoutChart = async (env: EBlockchainEnvironment, poolAddress: string): Promise<TPayoutChart> => {
+  if (PRODUCTS_CACHE[env] === null) {
+    await loadProducts(env)
+  }
+
+  const products = PRODUCTS_CACHE[env]
+  const product = products.find(product => product.params.poolAddress.toLowerCase() === poolAddress.toLowerCase())
+
+  if (!product) {
+    throw new Error('Not found')
+  }
+
+  const payoutChartResponse = await CLIENTS[env].get<TPayoutChart>(`/products/${product.id}/payoutChart`)
+  
+  return payoutChartResponse.data
+}
+
+/**
+ * Returns the comparison chart for holding vs staking of the underlying token
+ * @return[].date - DD-MM-YYY format of the reported day
+ * @return[].lpPrice - Price of the LP token (pool share)
+ * @return[].price - Price of the underlying token
+ * @return[].timestamp - Timestamp of the reported day
+ * @return[].tokenPrice === @return[].price
+ */
+export const loadHoldingVsStakingChart = async (env: EBlockchainEnvironment, poolAddress: string): Promise<THoldingVsStakingChart> => {
+  if (PRODUCTS_CACHE[env] === null) {
+    await loadProducts(env)
+  }
+
+  const products = PRODUCTS_CACHE[env]
+  const product = products.find(product => product.params.poolAddress.toLowerCase() === poolAddress.toLowerCase())
+
+  if (!product) {
+    throw new Error('Not found')
+  }
+
+  const holdingVsStakingChartResponse = await axios.get<THoldingVsStakingChart>(
+    `${OPIUM_WATCH_BASE_URL}/opium/analytics/${poolAddress.toLowerCase()}?network=${env}&marginToken=${product.params.marginTitle}`
+  )
+  
+  return holdingVsStakingChartResponse.data
 }

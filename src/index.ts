@@ -1,6 +1,14 @@
 import { pools, helpers } from './db'
 
-import { loadProducts, loadStakings, loadPool, getPoolDetails } from './api'
+import {
+  loadProducts,
+  loadStakings,
+  loadPool,
+  getPoolDetails,
+  loadPoolPerformanceChart,
+  loadPoolPayoutChart,
+  loadHoldingVsStakingChart
+} from './api'
 
 import { OpiumStakingPool } from './contracts/OpiumStakingPool'
 import { WithdrawalScheduler } from './contracts/WithdrawalScheduler'
@@ -15,7 +23,10 @@ export default {
     loadProducts,
     loadStakings,
     loadPool,
-    getPoolDetails
+    getPoolDetails,
+    loadPoolPerformanceChart,
+    loadPoolPayoutChart,
+    loadHoldingVsStakingChart
   },
   contracts: {
     OpiumStakingPool,
