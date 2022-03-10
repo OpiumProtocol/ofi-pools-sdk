@@ -6,7 +6,7 @@ export const helpers: Record<EBlockchainEnvironment, {
 }> = {
   [EBlockchainEnvironment.ETHEREUM]: {
     DepositScheduler: '0xe47b867b2b5b21a2022068c9ef1293783864b274',
-    WithdrawalScheduler: ''
+    WithdrawalScheduler: '0x27004Bd82cB5636A53b29203633A05FA256E0b5c'
   },
   [EBlockchainEnvironment.MATIC]: {
     DepositScheduler: '0xE9A92c5038b56b7dfD7E606967Ac676cD361BaC8',
