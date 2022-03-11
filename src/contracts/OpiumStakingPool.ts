@@ -8,6 +8,7 @@ export class OpiumStakingPool {
     public readonly providerConnector: ProviderConnector
   ) {}
 
+  // Actions
   public deposit(
     amount: string
   ): string {
@@ -22,6 +23,26 @@ export class OpiumStakingPool {
     return this._getContractCallData('withdraw', [
       amount
     ])
+  }
+
+  // View
+  /**
+   * Calculates ration between amount of underlying tokens and LP tokens (pool shares)
+   * @param amountOfUnderlyingTokens Amount of underlying tokens with decimals
+   * @returns Amount of corresponding LP tokens with same decimals as underlying
+   */
+  public calculateUnderlyingToSharesRatio(
+    amountOfUnderlyingTokens: string
+  ): Promise<string> {
+    const callData = this._getContractCallData(
+      'calculateUnderlyingToSharesRatio',
+      [
+        amountOfUnderlyingTokens
+      ]
+    )
+
+    return this.providerConnector
+      .ethCall(this.contractAddress, callData)
   }
 
   private _getContractCallData(

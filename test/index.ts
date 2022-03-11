@@ -63,6 +63,7 @@ describe('SDK', () => {
 
     const deposit = opiumStakingPool.deposit(amount)
     const withdraw = opiumStakingPool.withdraw(amount)
+    const underlyingToShares = await opiumStakingPool.calculateUnderlyingToSharesRatio(amount)
 
     const scheduleDeposit = depositScheduler.scheduleDeposit(poolAddress, amount)
     const unscheduleDeposit = depositScheduler.scheduleDeposit(poolAddress, amount)
@@ -75,6 +76,7 @@ describe('SDK', () => {
     console.log({
       deposit,
       withdraw,
+      underlyingToShares,
 
       scheduleDeposit,
       unscheduleDeposit,
