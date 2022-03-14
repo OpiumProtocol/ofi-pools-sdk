@@ -30,14 +30,23 @@ export class DepositScheduler {
   }
 
   public getScheduled(
-    poolAddress: string
+    poolAddress: string,
+    userAddress?: string
   ): Promise<string> {
-    const callData = this._getContractCallData(
-      'getScheduled(address)',
-      [
-        poolAddress
-      ]
-    )
+    const callData = userAddress
+      ? this._getContractCallData(
+        'getScheduled(address,address)',
+        [
+          userAddress,
+          poolAddress
+        ]
+      )
+      : this._getContractCallData(
+        'getScheduled(address)',
+        [
+          poolAddress
+        ]
+      )
 
     return this.providerConnector
       .ethCall(this.contractAddress, callData)

@@ -25,11 +25,17 @@ export class WithdrawalScheduler {
   }
 
   public isScheduled(
-    poolAddress: string
+    poolAddress: string,
+    userAddress?: string
   ): Promise<boolean> {
-    const callData = this._getContractCallData('isScheduled', [
-      poolAddress
-    ])
+    const callData = userAddress
+      ? this._getContractCallData('isScheduled(address,address)', [
+        userAddress,
+        poolAddress
+      ])
+      : this._getContractCallData('isScheduled(address)', [
+        poolAddress
+      ])
 
     return this.providerConnector
       .ethCall(this.contractAddress, callData)
