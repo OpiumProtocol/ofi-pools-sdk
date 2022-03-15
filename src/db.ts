@@ -9,8 +9,8 @@ export const helpers: Record<EBlockchainEnvironment, {
     WithdrawalScheduler: '0x27004Bd82cB5636A53b29203633A05FA256E0b5c'
   },
   [EBlockchainEnvironment.MATIC]: {
-    DepositScheduler: '0xE9A92c5038b56b7dfD7E606967Ac676cD361BaC8',
-    WithdrawalScheduler: '0x9BAce60564633530289E33CFDBF1B3Da57026020'
+    DepositScheduler: '0xeE1270120cE07Af80D2Eb1691807f1f66816c521',
+    WithdrawalScheduler: '0x04D64344caA3841Ad0157411914b3f3f39d88B40'
   },
   [EBlockchainEnvironment.ARBITRUM]: {
     DepositScheduler: '',
