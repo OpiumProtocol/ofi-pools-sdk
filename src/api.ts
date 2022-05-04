@@ -80,6 +80,7 @@ export const loadStakings = async (env: EBlockchainEnvironment, userAddress: str
  * @return.staking.params.currentEpochTimestamp - Strike price reset timestamp
  * @return.staking.params.stakingPhaseLength - Rebalancing phase duration
  * @return.staking.params.poolSize - Total staked
+ * @return.staking.params.epochLength - Length of the epoch in seconds
  * @return.staking.userStaked - Your stake (only if userAddress is passed, otherwise 0)
  * @return.staking.userStakedPending - Your stake (scheduled | pending) (only if userAddress is passed, otherwise 0)
  * Computed
