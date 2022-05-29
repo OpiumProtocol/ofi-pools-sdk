@@ -1,3 +1,4 @@
 # Opium Finance Staking Pools SDK
 
-[Read documentation](docs/index.md)
+- [Pools explained](docs-explained/index.md)
+- Pools ABI (coming soon...)
