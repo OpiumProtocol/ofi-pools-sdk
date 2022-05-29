@@ -4,7 +4,7 @@ Derivatives on Opium Protocol are “peer 2 peer” and require 2 counterparts t
 
 https://docs.opium.network/introduction-to-opium/what-is-opium
 
-![Opium Protocol Explained](./images/opium-protocol.png)
+![Opium Protocol Explained](./images/opium-protocol.png | width=100)
 
 Finding these counterparts is a problem and requires orderbooks to find and match traders with opposite desires. Traders need to actively maintain their orders and their prices though.
 
