@@ -53,3 +53,31 @@ Alternatively there are helping functions
 const isStakingPhase = opiumStakingContract.isStakingPhase()
 const isTradingPhase = opiumStakingContract.isTradingPhase()
 ```
+
+# Events
+
+Pools implement ERC20 token interface, so it inherits all of it's events
+
+Additionally it has the following events:
+
+```
+/// @notice Indicates new deposits into the pool
+/// @param user an address of the depositor
+/// @param _amount an amount of the deposit
+event Deposit(address indexed user, uint256 _amount);
+
+/// @notice Indicates new withdrawals from the pool
+/// @param user an address of the withdrawer
+/// @param _amount an amount of the withdrawal
+event Withdraw(address indexed user, uint256 _amount);
+
+/// @notice Indicates new hedge action
+/// @param user an address of the hedger
+/// @param _quantity an amount of created positions
+event Hedge(address indexed user, uint256 _quantity);
+
+/// @notice Indicates deployment of new LONG position token wrapper
+/// @param longTokenId a tokenId of the LONG position
+/// @param wrapper an address of the deployed wrapper
+event LongPositionWrapper(uint256 longTokenId, address wrapper);
+```
