@@ -17,8 +17,8 @@ export const helpers: Record<EBlockchainEnvironment, {
     WithdrawalScheduler: ''
   },
   [EBlockchainEnvironment.BINANCE]: {
-    DepositScheduler: '',
-    WithdrawalScheduler: ''
+    DepositScheduler: '0xC72E9B3E5a64FDca5f4C415F9f595eF92A5B9d86',
+    WithdrawalScheduler: '0xD33767Cc46C5aaF173539B71642bd1ebC1dA1f2C'
   },
 }
 
