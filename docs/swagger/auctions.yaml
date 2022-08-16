@@ -33,6 +33,12 @@ paths:
             type: string
           required: true
           description: ID of the auction
+        - in: query
+          name: partialFill
+          schema:
+            type: integer
+          required: false
+          description: Amount of contracts to purchase. Returned `callData` will be changed accordingly
       responses:
         '200':
           description: Successful operation
@@ -81,9 +87,17 @@ components:
           example: 0.0007
           description: Latest bid per 1 contract
         size:
-          type: string
-          example: "2'526 ETH"
-          description: Amount of contracts that's auctioned
+          type: number
+          example: 0
+          description: Amount of contracts that's left (unfilled) on the auction
+        filled:
+          type: number
+          example: 2526
+          description: Amount of contracts that's auctioned and were already filled
+        totalSize:
+          type: number
+          example: 2526
+          description: Total amount of contracts that's auctioned
         schemaVersion:
           type: string
           example: "v1"
@@ -91,7 +105,7 @@ components:
         takerAmount:
           type: string
           example: "1779598712052171600"
-          description: Amount of assets that auction taker must pay to take the full size of the auction
+          description: Amount of assets that auction taker must pay to take the left (unfilled) size of the auction. If `partialFill` query param is present, then represents the required amount of assets that auction taker must pay to take the part of the auction.
         poolId:
           type: string
           example: "PEER_2_POOL_OPTION_CALL_ETH_V3"
