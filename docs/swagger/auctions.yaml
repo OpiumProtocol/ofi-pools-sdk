@@ -41,6 +41,8 @@ paths:
               schema:
                 items:
                   $ref: '#/components/schemas/AuctionDataByID'
+        '404':
+          description: Not found
         '500':
           description: Internal error
 components:
