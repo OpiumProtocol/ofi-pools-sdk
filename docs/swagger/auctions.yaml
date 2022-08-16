@@ -21,11 +21,18 @@ paths:
                   $ref: '#/components/schemas/AuctionData' 
         '500':
           description: Internal error
-  /auctions/:id:
+  /auctions/{id}:
     get:
       summary: Get auction data by ID
       description: Get auction data by ID
       operationId: getAuctionById
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID of the auction
       responses:
         '200':
           description: Successful operation
