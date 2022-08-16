@@ -1,0 +1,118 @@
+openapi: 3.0.3
+info:
+  title: Opium Auctions
+  version: 1.0.0
+servers:
+  - url: https://api.opium.watch/v1
+paths:
+  /auctions:
+    get:
+      summary: Get all auctions
+      description: Get all auctions
+      operationId: getAllAuctions
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuctionData' 
+        '500':
+          description: Internal error
+  /auctions/:id:
+    get:
+      summary: Get auction data by ID
+      description: Get auction data by ID
+      operationId: getAuctionById
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AuctionDataByID'
+        '500':
+          description: Internal error
+components:
+  schemas:
+    AuctionDataByID:
+      type: object
+      properties:
+        auction:
+          $ref: '#/components/schemas/AuctionData'
+        callData:
+          type: string
+          nullable: true
+          description: Contains calldata to 1inch Limit Order Protocol contract to fill the auction. If null, then auction is not active.
+    AuctionData:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "6cc8cd4d-bcb5-4a2b-bffc-a976d56f685b"
+          description: Unique auction ID
+        # Auction Data
+        ticker:
+          type: string
+          example: "OFI-OPT-C-ETH/USD-22JUL-1600.00"
+          description: Ticker of the auctioned derivative
+        startDate:
+          type: number
+          example: 1657891514
+          description: UNIX Timestamp of the auction start
+        endDate:
+          type: number
+          example: 1657892832
+          description: UNIX Timestamp of the auction end
+        bid:
+          type: number
+          example: 0.0007
+          description: Latest bid per 1 contract
+        size:
+          type: string
+          example: "2'526 ETH"
+          description: Amount of contracts that's auctioned
+        schemaVersion:
+          type: string
+          example: "v1"
+          description: Internal version of the auction schema in DB
+        takerAmount:
+          type: string
+          example: "1779598712052171600"
+          description: Amount of assets that auction taker must pay to take the full size of the auction
+        poolId:
+          type: string
+          example: "PEER_2_POOL_OPTION_CALL_ETH_V3"
+          description: Internal ID of the pool that's auctioned
+        # Pool Data
+        chain:
+          type: string
+          enum:
+            - "polygon"
+            - "ethereum"
+          example: "polygon"
+          description: Name of the chain that auction is happening on
+        address:
+          type: string
+          example: "0x211aaCc5A7761298fF0E2A7d37B7710E6e588B70"
+          description: Address of the pool that's auctioned
+        nominal:
+          type: number
+          example: 0.01
+          description: Nominal of the pool's underlying derivative contract
+        token:
+          type: object
+          description: Pool's collateral token info
+          properties:
+            title:
+              type: string
+              example: "ETH"
+            address:
+              type: string
+              example: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619"
+            decimals:
+              type: number
+              example: 18
