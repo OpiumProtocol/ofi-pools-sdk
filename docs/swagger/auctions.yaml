@@ -62,6 +62,10 @@ components:
           type: string
           nullable: true
           description: Contains calldata to 1inch Limit Order Protocol contract to fill the auction. If null, then auction is not active.
+        limitOrderProtocolAddress:
+          type: string
+          example: "0xb707d89D29c189421163515c59E42147371D6857"
+          description: Address of the 1inch Limit Order Protocol contract to make allowance and calls to
     AuctionData:
       type: object
       properties:
