@@ -121,7 +121,7 @@ components:
         address:
           type: string
           example: "0x211aaCc5A7761298fF0E2A7d37B7710E6e588B70"
-          description: Address of the pool that's auctioned
+          description: Address of the auction smart contract
         nominal:
           type: number
           example: 0.01
