@@ -38,7 +38,7 @@ paths:
           schema:
             type: integer
           required: false
-          description: Amount of contracts to purchase. Returned `callData` will be changed accordingly
+          description: Amount of contracts to purchase. Returned `callData` will be changed accordingly. If incorrect, throws 422 error code.
       responses:
         '200':
           description: Successful operation
@@ -49,6 +49,8 @@ paths:
                   $ref: '#/components/schemas/AuctionDataByID'
         '404':
           description: Not found
+        '422':
+          description: Unprocessable Entity
         '500':
           description: Internal error
 components:
